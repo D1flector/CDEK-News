@@ -1,0 +1,34 @@
+export interface Rubric {
+  id: number;
+  slug: string;
+  name: string;
+}
+
+export interface NewsImage {
+  s: string;
+  m: string;
+  l: string;
+  hd: string;
+}
+
+export interface Cover {
+  type: string;
+  images: NewsImage[];
+}
+
+export interface NewsItem {
+  id: string;
+  title: string;
+  cover: Cover;
+  likeCount: number;
+  viewCount: number;
+  publishedAt: string;
+  rubrics: Rubric[];
+}
+
+export interface NewsResponse {
+  totalPages: number;
+  perPage: number;
+  news: NewsItem[];
+  minDatePublication: string;
+}
