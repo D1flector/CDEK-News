@@ -22,7 +22,9 @@ export const NewsCard = ({
   return (
     <div
       className={`flex w-full ${
-        variant === "horizontal" ? "flex-row gap-4" : "flex-col gap-3"
+        variant === "horizontal"
+          ? "flex-row gap-4 min-h-[110px]"
+          : "flex-col gap-3"
       }`}
     >
       {(variant === "full" || variant === "horizontal") && news.imageUrl && (
@@ -49,8 +51,8 @@ export const NewsCard = ({
         </div>
       )}
 
-      {/* Текст */}
       <div className="flex flex-col flex-grow min-w-0 justify-center gap-1.5">
+        {/* Дата над заголовком — только в horizontal */}
         {variant === "horizontal" && (
           <span className="text-[12px] text-date">
             {formatDate(news.publishedAt)}
@@ -83,7 +85,6 @@ export const NewsCard = ({
             ))}
           </div>
 
-          {/* Дата после тегов — для compact и full */}
           {variant !== "horizontal" && (
             <span className="text-date">{formatDate(news.publishedAt)}</span>
           )}

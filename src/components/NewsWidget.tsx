@@ -21,21 +21,54 @@ const NewsWidget = ({
   const displayDate = formatMonthYear(new Date());
 
   if (isLoading) {
-    return <div className="p-8 text-center text-muted">Загрузка...</div>;
+    return (
+      <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
+        <div className="pb-4 border-b border-gray-100 mb-6">
+          <h2 className="text-2xl font-bold text-title">{title}</h2>
+          <span className="text-sm text-date capitalize mt-1 block">
+            {displayDate}
+          </span>
+        </div>
+        <div className="flex flex-col gap-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="flex gap-4 animate-pulse">
+              <div className="w-[160px] h-[110px] bg-gray-100 rounded-xl shrink-0" />
+              <div className="flex flex-col gap-2 flex-grow justify-center">
+                <div className="h-3 bg-gray-100 rounded w-1/4" />
+                <div className="h-4 bg-gray-100 rounded w-3/4" />
+                <div className="h-3 bg-gray-100 rounded w-1/3" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="p-8 text-center text-red-500">{error}</div>;
+    return (
+      <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
+        <div className="pb-4 border-b border-gray-100 mb-6">
+          <h2 className="text-2xl font-bold text-title">{title}</h2>
+          <span className="text-sm text-date capitalize mt-1 block">
+            {displayDate}
+          </span>
+        </div>
+        <div className="flex flex-col items-center py-20 text-red-400">
+          <p>{error}</p>
+        </div>
+      </div>
+    );
   }
 
   if (!data || data.news.length === 0) {
     return (
       <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
         <div className="pb-4 border-b border-gray-100 mb-6">
-          <div className="flex justify-between items-start">
-            <h2 className="text-2xl font-bold text-title">{title}</h2>
-            <span className="text-sm text-date capitalize">{displayDate}</span>
-          </div>
+          <h2 className="text-2xl font-bold text-title">{title}</h2>
+          <span className="text-sm text-date capitalize mt-1 block">
+            {displayDate}
+          </span>
         </div>
         <div className="flex flex-col items-center py-20 text-muted italic">
           <p>Новых новостей нет</p>
@@ -66,6 +99,7 @@ const NewsWidget = ({
                     : "compact"
               }
               tagVariant={isBusiness ? "hashtag" : "gray"}
+              priority={index === 0}
             />
 
             {isBusiness && index < data.news.length - 1 && (
