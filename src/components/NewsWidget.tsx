@@ -24,15 +24,13 @@ const NewsWidget = ({
     return (
       <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
         <div className="pb-4 border-b border-gray-100 mb-6">
-          <h2 className="text-2xl font-bold text-title">{title}</h2>
-          <span className="text-sm text-date capitalize mt-1 block">
-            {displayDate}
-          </span>
+          <h2 className="text-2xl font-semibold text-title">{title}</h2>
+          <span className="text-base text-date mt-1 block">{displayDate}</span>
         </div>
         <div className="flex flex-col gap-4">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="flex gap-4 animate-pulse">
-              <div className="w-[160px] h-[110px] bg-gray-100 rounded-xl shrink-0" />
+              <div className="w-[120px] h-[120px] bg-gray-100 rounded-xl shrink-0" />
               <div className="flex flex-col gap-2 flex-grow justify-center">
                 <div className="h-3 bg-gray-100 rounded w-1/4" />
                 <div className="h-4 bg-gray-100 rounded w-3/4" />
@@ -49,10 +47,8 @@ const NewsWidget = ({
     return (
       <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
         <div className="pb-4 border-b border-gray-100 mb-6">
-          <h2 className="text-2xl font-bold text-title">{title}</h2>
-          <span className="text-sm text-date capitalize mt-1 block">
-            {displayDate}
-          </span>
+          <h2 className="text-2xl font-semibold text-title">{title}</h2>
+          <span className="text-base text-date mt-1 block">{displayDate}</span>
         </div>
         <div className="flex flex-col items-center py-20 text-red-400">
           <p>{error}</p>
@@ -65,10 +61,8 @@ const NewsWidget = ({
     return (
       <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
         <div className="pb-4 border-b border-gray-100 mb-6">
-          <h2 className="text-2xl font-bold text-title">{title}</h2>
-          <span className="text-sm text-date capitalize mt-1 block">
-            {displayDate}
-          </span>
+          <h2 className="text-2xl font-semibold text-title">{title}</h2>
+          <span className="text-base text-date mt-1 block">{displayDate}</span>
         </div>
         <div className="flex flex-col items-center py-20 text-muted italic">
           <p>Новых новостей нет</p>
@@ -80,8 +74,8 @@ const NewsWidget = ({
   return (
     <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
       <div className="pb-4 border-b border-gray-100 mb-6">
-        <h2 className="text-2xl font-bold text-title">{title}</h2>
-        <span className="text-sm text-date capitalize mt-1 block">
+        <h2 className="text-2xl font-semibold text-title">{title}</h2>
+        <span className="text-base text-date mt-1 block capitalize">
           {displayDate}
         </span>
       </div>
@@ -100,6 +94,7 @@ const NewsWidget = ({
               }
               tagVariant={isBusiness ? "hashtag" : "gray"}
               priority={index === 0}
+              isFirst={index === 0}
             />
 
             {isBusiness && index < data.news.length - 1 && (

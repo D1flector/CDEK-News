@@ -7,7 +7,7 @@ interface TagProps {
 
 const Tag = ({ children, variant = "gray" }: TagProps) => {
   const baseStyles =
-    "text-[12px] font-medium inline-block whitespace-nowrap transition-colors";
+    "text-sm font-medium inline-block whitespace-nowrap transition-colors";
 
   const variants = {
     gray: "bg-[#E2E2E4] text-[#000000] px-2 py-0.5 rounded-[4px]",

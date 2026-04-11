@@ -9,9 +9,9 @@ const StatBadge = ({ type, count }: StatBadgeProps) => {
   const Icon = type === "like" ? IconThumbUp : IconEye;
 
   return (
-    <div className="flex items-center gap-1 text-[#828282]">
-      <Icon size={21} />
-      <span className="text-[12px] font-medium leading-none">{count}</span>
+    <div className="flex items-center gap-1 text-[#85888E]">
+      <Icon size={18} />
+      <span className="text-sm font-normal">{count}</span>
     </div>
   );
 };

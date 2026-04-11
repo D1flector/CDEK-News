@@ -11,6 +11,7 @@ interface NewsCardProps {
   variant: "full" | "compact" | "horizontal";
   tagVariant?: "gray" | "hashtag";
   priority?: boolean;
+  isFirst?: boolean;
 }
 
 export const NewsCard = ({
@@ -18,32 +19,43 @@ export const NewsCard = ({
   variant,
   tagVariant = "gray",
   priority = false,
+  isFirst = false,
 }: NewsCardProps) => {
   return (
     <div
       className={`flex w-full ${
         variant === "horizontal"
-          ? "flex-row gap-4 min-h-[110px]"
+          ? "flex-col sm:flex-row sm:gap-4 sm:min-h-[120px] gap-3"
           : "flex-col gap-3"
       }`}
     >
-      {(variant === "full" || variant === "horizontal") && news.imageUrl && (
+      {variant === "full" && news.imageUrl && (
+        <div className="relative overflow-hidden rounded-xl w-full h-[220px]">
+          <Image
+            src={news.imageUrl}
+            alt={news.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 600px"
+            className="object-cover"
+            loading={priority ? "eager" : "lazy"}
+            priority={priority}
+          />
+        </div>
+      )}
+
+      {variant === "horizontal" && news.imageUrl && (
         <div
           className={`relative overflow-hidden rounded-xl shrink-0 ${
-            variant === "horizontal"
-              ? "w-[160px] h-[110px]"
-              : "w-full h-[220px]"
+            isFirst
+              ? "w-full h-[200px] sm:w-[120px] sm:h-[120px]"
+              : "hidden sm:block sm:w-[120px] sm:h-[120px]"
           }`}
         >
           <Image
             src={news.imageUrl}
             alt={news.title}
             fill
-            sizes={
-              variant === "horizontal"
-                ? "160px"
-                : "(max-width: 768px) 100vw, 600px"
-            }
+            sizes="(max-width: 640px) 100vw, 120px"
             className="object-cover"
             loading={priority ? "eager" : "lazy"}
             priority={priority}
@@ -52,9 +64,8 @@ export const NewsCard = ({
       )}
 
       <div className="flex flex-col flex-grow min-w-0 justify-center gap-1.5">
-        {/* Дата над заголовком — только в horizontal */}
         {variant === "horizontal" && (
-          <span className="text-[12px] text-date">
+          <span className="text-base text-date">
             {formatDate(news.publishedAt)}
           </span>
         )}
@@ -67,7 +78,7 @@ export const NewsCard = ({
           {news.title}
         </h3>
 
-        <div className="flex items-center gap-2 flex-wrap text-[12px] text-date">
+        <div className="flex items-center gap-2 flex-wrap text-base text-date">
           <div className="flex gap-1.5 flex-wrap">
             {news.rubrics.map((r) => (
               <Tag
@@ -86,7 +97,9 @@ export const NewsCard = ({
           </div>
 
           {variant !== "horizontal" && (
-            <span className="text-date">{formatDate(news.publishedAt)}</span>
+            <span className="text-base text-date">
+              {formatDate(news.publishedAt)}
+            </span>
           )}
 
           <div className="flex gap-3 ml-auto shrink-0">
