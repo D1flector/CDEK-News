@@ -24,6 +24,7 @@ export interface NewsItem {
   viewCount: number;
   publishedAt: string;
   rubrics: Rubric[];
+  imageUrl?: string | null;
 }
 
 export interface NewsResponse {

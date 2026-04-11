@@ -11,14 +11,16 @@ interface NewsCardProps {
 
 export const NewsCard = ({ news, variant }: NewsCardProps) => {
   return (
-    <div className="bg-card-bg rounded-xl p-4 flex flex-col gap-[14px] transition-shadow hover:shadow-md border border-gray-100">
-      {variant === "full" && news.cover?.images[0] && (
-        <div className="relative w-full h-40">
+    <div className="bg-card-bg rounded-xl p-4 flex flex-col gap-[14px] transition-shadow hover:shadow-md border border-gray-100 h-full">
+      {variant === "full" && news.imageUrl && (
+        <div className="relative w-full h-40 overflow-hidden rounded-lg">
           <Image
-            src={news.cover.images[0].m}
+            src={news.imageUrl}
             alt={news.title}
             fill
-            className="object-cover rounded-lg"
+            priority
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover"
           />
         </div>
       )}
@@ -27,7 +29,7 @@ export const NewsCard = ({ news, variant }: NewsCardProps) => {
         {formatDate(news.publishedAt)}
       </span>
 
-      <h3 className="font-medium text-lg leading-[24px] text-title">
+      <h3 className="font-medium text-lg leading-[24px] text-title flex-grow">
         {news.title}
       </h3>
 

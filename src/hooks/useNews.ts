@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { NewsResponse } from "@/types/news";
+import { NewsResponse, NewsItem } from "@/types/news";
+
+const BASE_URL = "http://1e14c3489fcb.vps.myjino.ru:5000";
 
 export const useNews = (type: string, perPage: number = 3) => {
   const [data, setData] = useState<NewsResponse | null>(null);
@@ -16,18 +18,31 @@ export const useNews = (type: string, perPage: number = 3) => {
           `/api/news?type=${type}&page=${page}&perPage=${perPage}`,
         );
 
-        if (!res.ok) {
-          throw new Error(`Сервер ответил ошибкой: ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`Сервер ответил ошибкой: ${res.status}`);
 
-        const dataFromServer = await res.json();
-        setData(dataFromServer);
+        const dataFromServer: NewsResponse = await res.json();
+
+        // Нормализация данных: превращаю относительные ссылки в полные
+        const normalizedNews = dataFromServer.news.map((item: NewsItem) => {
+          const rawUrl = item.cover?.images[0]?.m;
+          const fullUrl = rawUrl
+            ? rawUrl.startsWith("http")
+              ? rawUrl
+              : `${BASE_URL}${rawUrl}`
+            : null;
+
+          return {
+            ...item,
+            imageUrl: fullUrl,
+          };
+        });
+
+        setData({
+          ...dataFromServer,
+          news: normalizedNews,
+        });
       } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Произошла неизвестная ошибка");
-        }
+        setError(err instanceof Error ? err.message : "Ошибка");
       } finally {
         setIsLoading(false);
       }
