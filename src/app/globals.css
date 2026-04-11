@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@theme {
+  --color-date: #85888e;
+  --color-title: #181a1f;
+  --color-card-bg: #fff;
+}
+
+@layer base {
+  body {
+    background-color: #f4f5f7;
+    color: var(--color-title);
+  }
+}
