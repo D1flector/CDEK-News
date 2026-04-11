@@ -2,6 +2,7 @@ import Image from "next/image";
 import { NewsItem } from "@/types/news";
 import Tag from "../ui/Tag";
 import StatBadge from "../ui/StatBadge";
+import { formatDate } from "@/utils/formatDate";
 
 interface NewsCardProps {
   news: NewsItem;
@@ -23,15 +24,10 @@ export const NewsCard = ({ news, variant }: NewsCardProps) => {
       )}
 
       <span className="text-[12px] text-date">
-        {new Date(news.publishedAt).toLocaleDateString("ru-RU", {
-          day: "numeric",
-          month: "long",
-          hour: "2-digit",
-          minute: "2-digit",
-        })}
+        {formatDate(news.publishedAt)}
       </span>
 
-      <h3 className="font-medium text-lg leading-[23.63px] text-title">
+      <h3 className="font-medium text-lg leading-[24px] text-title">
         {news.title}
       </h3>
 
