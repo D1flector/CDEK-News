@@ -22,18 +22,20 @@ export const useNews = (type: string, perPage: number = 3) => {
 
         const dataFromServer: NewsResponse = await res.json();
 
-        // Нормализация данных: превращаю относительные ссылки в полные
         const normalizedNews = dataFromServer.news.map((item: NewsItem) => {
-          const rawUrl = item.cover?.images[0]?.m;
-          const fullUrl = rawUrl
-            ? rawUrl.startsWith("http")
-              ? rawUrl
-              : `${BASE_URL}${rawUrl}`
-            : null;
+          const img = item.cover?.images[0];
+
+          const getFullUrl = (path?: string) => {
+            if (!path) return null;
+            return path.startsWith("http") ? path : `${BASE_URL}${path}`;
+          };
 
           return {
             ...item,
-            imageUrl: fullUrl,
+            imageSmall: getFullUrl(img?.s),
+            imageUrl: getFullUrl(img?.m),
+            imageLarge: getFullUrl(img?.l),
+            imageHD: getFullUrl(img?.hd),
           };
         });
 
@@ -52,15 +54,11 @@ export const useNews = (type: string, perPage: number = 3) => {
   }, [type, page, perPage]);
 
   const nextPage = () => {
-    if (data && page < data.totalPages) {
-      setPage((prev) => prev + 1);
-    }
+    if (data && page < data.totalPages) setPage((prev) => prev + 1);
   };
 
   const prevPage = () => {
-    if (page > 1) {
-      setPage((prev) => prev - 1);
-    }
+    if (page > 1) setPage((prev) => prev - 1);
   };
 
   return { data, isLoading, error, page, nextPage, prevPage };

@@ -21,64 +21,57 @@ export const NewsCard = ({
   priority = false,
   isFirst = false,
 }: NewsCardProps) => {
+  // Выбираем разрешение в зависимости от размера блока
+  // Для большого баннера - L или HD. Для списка - M.
+  const src =
+    variant === "full" ? news.imageHD || news.imageLarge : news.imageUrl;
+
   return (
     <div
       className={`flex w-full ${
         variant === "horizontal"
-          ? "flex-col sm:flex-row sm:gap-4 sm:min-h-[120px] gap-3"
-          : "flex-col gap-3"
+          ? "flex-col sm:flex-row sm:gap-6 gap-3"
+          : "flex-col gap-4"
       }`}
     >
-      {variant === "full" && news.imageUrl && (
-        <div className="relative overflow-hidden rounded-xl w-full h-[220px]">
-          <Image
-            src={news.imageUrl}
-            alt={news.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 600px"
-            className="object-cover"
-            loading={priority ? "eager" : "lazy"}
-            priority={priority}
-          />
-        </div>
-      )}
-
-      {variant === "horizontal" && news.imageUrl && (
+      {src && (variant === "full" || variant === "horizontal") && (
         <div
-          className={`relative overflow-hidden rounded-xl shrink-0 ${
-            isFirst
-              ? "w-full h-[200px] sm:w-[120px] sm:h-[120px]"
-              : "hidden sm:block sm:w-[120px] sm:h-[120px]"
+          className={`relative overflow-hidden rounded-2xl shrink-0 ${
+            variant === "full"
+              ? "w-full h-[220px] sm:h-[360px]"
+              : isFirst
+                ? "w-full h-[200px] sm:w-[240px] sm:h-[160px]"
+                : "hidden sm:block sm:w-[240px] sm:h-[160px]"
           }`}
         >
           <Image
-            src={news.imageUrl}
+            src={src}
             alt={news.title}
             fill
-            sizes="(max-width: 640px) 100vw, 120px"
+            sizes="(max-width: 640px) 100vw, 400px"
             className="object-cover"
-            loading={priority ? "eager" : "lazy"}
             priority={priority}
           />
         </div>
       )}
 
-      <div className="flex flex-col flex-grow min-w-0 justify-center gap-1.5">
+      {/* ТЕКСТ */}
+      <div className="flex flex-col flex-grow min-w-0 justify-center">
         {variant === "horizontal" && (
-          <span className="text-base text-date">
+          <span className="text-[16px] text-date mb-1 block">
             {formatDate(news.publishedAt)}
           </span>
         )}
 
         <h3
-          className={`font-medium text-title leading-snug ${
-            variant === "compact" ? "text-base" : "text-lg"
+          className={`font-bold text-title leading-tight mb-2 ${
+            variant === "compact" ? "text-base" : "text-lg sm:text-[22px]"
           }`}
         >
           {news.title}
         </h3>
 
-        <div className="flex items-center gap-2 flex-wrap text-base text-date">
+        <div className="flex items-center gap-2 flex-wrap mt-auto">
           <div className="flex gap-1.5 flex-wrap">
             {news.rubrics.map((r) => (
               <Tag
@@ -97,12 +90,12 @@ export const NewsCard = ({
           </div>
 
           {variant !== "horizontal" && (
-            <span className="text-base text-date">
+            <span className="text-sm text-date ml-1">
               {formatDate(news.publishedAt)}
             </span>
           )}
 
-          <div className="flex gap-3 ml-auto shrink-0">
+          <div className="flex gap-4 ml-auto shrink-0 items-center">
             <StatBadge type="like" count={news.likeCount} />
             <StatBadge type="view" count={news.viewCount} />
           </div>
