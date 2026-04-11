@@ -1,5 +1,4 @@
 "use client";
-
 import { useNews } from "@/hooks/useNews";
 import NewsCard from "./news/NewsCard";
 import IconButton from "./ui/IconButton";
@@ -9,12 +8,14 @@ interface NewsWidgetProps {
   title: string;
   type: "company/short" | "company/empty";
   displayVariant?: "all-full" | "first-full";
+  isBusiness?: boolean;
 }
 
 const NewsWidget = ({
   title,
   type,
   displayVariant = "first-full",
+  isBusiness = false,
 }: NewsWidgetProps) => {
   const { data, isLoading, error, nextPage, prevPage, page } = useNews(type);
   const displayDate = formatMonthYear(new Date());
@@ -29,9 +30,14 @@ const NewsWidget = ({
 
   if (!data || data.news.length === 0) {
     return (
-      <div className="bg-white p-6 rounded-2xl w-full border border-gray-100 flex flex-col items-center">
-        <h2 className="text-xl font-bold mb-6 self-start">{title}</h2>
-        <div className="flex flex-col items-center gap-4 py-10 text-muted">
+      <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
+        <div className="pb-4 border-b border-gray-100 mb-6">
+          <div className="flex justify-between items-start">
+            <h2 className="text-2xl font-bold text-title">{title}</h2>
+            <span className="text-sm text-date capitalize">{displayDate}</span>
+          </div>
+        </div>
+        <div className="flex flex-col items-center py-20 text-muted italic">
           <p>Новых новостей нет</p>
         </div>
       </div>
@@ -39,21 +45,33 @@ const NewsWidget = ({
   }
 
   return (
-    <div className="bg-white p-6 rounded-2xl w-full border border-gray-100">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-title">{title}</h2>
-        <span className="text-sm text-date capitalize">{displayDate}</span>
+    <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
+      <div className="pb-4 border-b border-gray-100 mb-6">
+        <h2 className="text-2xl font-bold text-title">{title}</h2>
+        <span className="text-sm text-date capitalize mt-1 block">
+          {displayDate}
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="flex flex-col gap-4">
         {data.news.map((item, index) => (
-          <NewsCard
-            key={item.id}
-            news={item}
-            variant={
-              displayVariant === "all-full" || index === 0 ? "full" : "compact"
-            }
-          />
+          <div key={item.id} className="w-full">
+            <NewsCard
+              news={item}
+              variant={
+                displayVariant === "all-full"
+                  ? "horizontal"
+                  : index === 0
+                    ? "full"
+                    : "compact"
+              }
+              tagVariant={isBusiness ? "hashtag" : "gray"}
+            />
+
+            {isBusiness && index < data.news.length - 1 && (
+              <div className="h-[1px] bg-gray-100 mt-4" />
+            )}
+          </div>
         ))}
       </div>
 

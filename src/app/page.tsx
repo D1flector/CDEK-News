@@ -15,6 +15,7 @@ export default function Home() {
         title="Бизнес"
         type="company/short"
         displayVariant="first-full"
+        isBusiness={true}
       />
 
       <NewsWidget title="Важные новости" type="company/empty" />

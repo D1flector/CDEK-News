@@ -4,47 +4,94 @@ import Tag from "../ui/Tag";
 import StatBadge from "../ui/StatBadge";
 import { formatDate } from "@/utils/formatDate";
 
+const BLUE_SLUGS = new Set(["top"]);
+
 interface NewsCardProps {
   news: NewsItem;
-  variant: "full" | "compact";
+  variant: "full" | "compact" | "horizontal";
+  tagVariant?: "gray" | "hashtag";
+  priority?: boolean;
 }
 
-export const NewsCard = ({ news, variant }: NewsCardProps) => {
+export const NewsCard = ({
+  news,
+  variant,
+  tagVariant = "gray",
+  priority = false,
+}: NewsCardProps) => {
   return (
-    <div className="bg-card-bg rounded-xl p-4 flex flex-col gap-[14px] transition-shadow hover:shadow-md border border-gray-100 h-full">
-      {variant === "full" && news.imageUrl && (
-        <div className="relative w-full h-40 overflow-hidden rounded-lg">
+    <div
+      className={`flex w-full ${
+        variant === "horizontal" ? "flex-row gap-4" : "flex-col gap-3"
+      }`}
+    >
+      {(variant === "full" || variant === "horizontal") && news.imageUrl && (
+        <div
+          className={`relative overflow-hidden rounded-xl shrink-0 ${
+            variant === "horizontal"
+              ? "w-[160px] h-[110px]"
+              : "w-full h-[220px]"
+          }`}
+        >
           <Image
             src={news.imageUrl}
             alt={news.title}
             fill
-            priority
-            sizes="(max-width: 768px) 100vw, 33vw"
+            sizes={
+              variant === "horizontal"
+                ? "160px"
+                : "(max-width: 768px) 100vw, 600px"
+            }
             className="object-cover"
+            loading={priority ? "eager" : "lazy"}
+            priority={priority}
           />
         </div>
       )}
 
-      <span className="text-[12px] text-date">
-        {formatDate(news.publishedAt)}
-      </span>
+      {/* Текст */}
+      <div className="flex flex-col flex-grow min-w-0 justify-center gap-1.5">
+        {variant === "horizontal" && (
+          <span className="text-[12px] text-date">
+            {formatDate(news.publishedAt)}
+          </span>
+        )}
 
-      <h3 className="font-medium text-lg leading-[24px] text-title flex-grow">
-        {news.title}
-      </h3>
+        <h3
+          className={`font-medium text-title leading-snug ${
+            variant === "compact" ? "text-base" : "text-lg"
+          }`}
+        >
+          {news.title}
+        </h3>
 
-      <div className="flex items-center justify-between mt-auto pt-2">
-        <div className="flex gap-2">
-          {news.rubrics.map((r) => (
-            <Tag key={r.id} variant="gray">
-              {r.name}
-            </Tag>
-          ))}
-        </div>
+        <div className="flex items-center gap-2 flex-wrap text-[12px] text-date">
+          <div className="flex gap-1.5 flex-wrap">
+            {news.rubrics.map((r) => (
+              <Tag
+                key={r.id}
+                variant={
+                  tagVariant === "hashtag"
+                    ? "hashtag"
+                    : BLUE_SLUGS.has(r.slug)
+                      ? "blue"
+                      : "gray"
+                }
+              >
+                {r.name}
+              </Tag>
+            ))}
+          </div>
 
-        <div className="flex gap-3">
-          <StatBadge type="like" count={news.likeCount} />
-          <StatBadge type="view" count={news.viewCount} />
+          {/* Дата после тегов — для compact и full */}
+          {variant !== "horizontal" && (
+            <span className="text-date">{formatDate(news.publishedAt)}</span>
+          )}
+
+          <div className="flex gap-3 ml-auto shrink-0">
+            <StatBadge type="like" count={news.likeCount} />
+            <StatBadge type="view" count={news.viewCount} />
+          </div>
         </div>
       </div>
     </div>
