@@ -7,3 +7,9 @@ export const formatDate = (dateString: string): string => {
     minute: "2-digit",
   });
 };
+
+export const formatMonthYear = (date: Date): string => {
+  const month = date.toLocaleDateString("ru-RU", { month: "long" });
+  const year = date.getFullYear();
+  return `${month.charAt(0).toUpperCase() + month.slice(1)}, ${year}`;
+};
