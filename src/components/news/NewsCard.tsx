@@ -56,7 +56,7 @@ export const NewsCard = ({
       {/* ТЕКСТ */}
       <div className="flex flex-col flex-grow min-w-0 justify-center">
         {variant === "horizontal" && (
-          <span className="text-xs text-date mb-1 block font-normal">
+          <span className="text-sm text-date mb-1 block font-normal">
             {formatDate(news.publishedAt)}
           </span>
         )}
@@ -88,7 +88,7 @@ export const NewsCard = ({
           </div>
 
           {variant !== "horizontal" && (
-            <span className="text-xs text-date ml-1 font-normal">
+            <span className="text-sm text-date ml-1 font-normal">
               {formatDate(news.publishedAt)}
             </span>
           )}
