@@ -3,6 +3,7 @@ import { useNews } from "@/hooks/useNews";
 import NewsCard from "./news/NewsCard";
 import IconButton from "./ui/IconButton";
 import { formatMonthYear } from "@/utils/formatDate";
+import Image from "next/image";
 
 interface NewsWidgetProps {
   title: string;
@@ -64,8 +65,16 @@ const NewsWidget = ({
           <h2 className="text-2xl font-bold text-title">{title}</h2>
           <span className="text-base text-date mt-1 block">{displayDate}</span>
         </div>
-        <div className="flex flex-col items-center py-20 text-muted italic">
-          <p>Новых новостей нет</p>
+        <div className="flex flex-col items-center">
+          <div className="relative w-[160px] h-[160px]">
+            <Image
+              src="/images/empty-news.svg"
+              alt="Новых новостей нет"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <p className="text-title font-bold">Новых новостей нет</p>
         </div>
       </div>
     );
