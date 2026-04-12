@@ -79,35 +79,39 @@ export const NewsCard = ({
           {news.title}
         </h3>
 
-        <div className="flex items-center gap-2 flex-wrap mt-auto">
-          <div className="flex gap-1.5 flex-wrap">
-            {news.rubrics.map((r) => (
-              <Tag
-                key={r.id}
-                variant={
-                  isHashtagMode
-                    ? "hashtag"
-                    : BLUE_SLUGS.has(r.slug)
-                      ? "blue"
-                      : "gray"
-                }
-              >
-                {r.name}
-              </Tag>
-            ))}
+        <div
+          className={`flex flex-wrap items-center mt-auto w-full gap-y-2 ${
+            isHashtagMode ? "gap-x-2" : "justify-between gap-x-4"
+          }`}
+        >
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex gap-1.5 flex-wrap">
+              {news.rubrics.map((r) => (
+                <Tag
+                  key={r.id}
+                  variant={
+                    isHashtagMode
+                      ? "hashtag"
+                      : BLUE_SLUGS.has(r.slug)
+                        ? "blue"
+                        : "gray"
+                  }
+                >
+                  {r.name}
+                </Tag>
+              ))}
+            </div>
+
+            {isHashtagMode && <span className="text-gray-300">•</span>}
+
+            {(isHashtagMode || variant !== "horizontal") && (
+              <span className="text-sm text-date font-normal">
+                {formatDate(news.publishedAt)}
+              </span>
+            )}
           </div>
 
-          {isHashtagMode && <span className="text-gray-300 ml-1">•</span>}
-
-          {(isHashtagMode || variant !== "horizontal") && (
-            <span className="text-sm text-date font-normal">
-              {formatDate(news.publishedAt)}
-            </span>
-          )}
-
-          <div
-            className={`flex gap-3 shrink-0 items-center ${isHashtagMode ? "" : "ml-auto"}`}
-          >
+          <div className="flex gap-3 shrink-0 items-center">
             {isHashtagMode && <span className="text-gray-300">•</span>}
             <StatBadge type="like" count={news.likeCount} />
             <StatBadge type="view" count={news.viewCount} />

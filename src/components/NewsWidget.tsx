@@ -25,7 +25,7 @@ const NewsWidget = ({
 
   return (
     <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
-      <div className="pb-4 border-b border-gray-100 mb-6">
+      <div className="pb-4 border-b border-gray-300 mb-6">
         <h2 className="text-2xl font-bold text-title">{title}</h2>
         <span className="text-base text-date mt-1 block capitalize">
           {displayDate}
