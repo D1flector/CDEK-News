@@ -69,7 +69,14 @@ const NewsWidget = ({
         {!error && hasData && (
           <div className="flex flex-col gap-4">
             {data.news.map((item, index) => (
-              <div key={item.id} className="w-full">
+              <div
+                key={item.id}
+                className="w-full animate-fade-in-up opacity-0"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                  animationFillMode: "forwards",
+                }}
+              >
                 <NewsCard
                   news={item}
                   variant={
