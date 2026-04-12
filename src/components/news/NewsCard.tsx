@@ -21,6 +21,7 @@ export const NewsCard = ({
   priority = false,
   isFirst = false,
 }: NewsCardProps) => {
+  const isHashtagMode = tagVariant === "hashtag";
   const src =
     variant === "full" ? news.imageHD || news.imageLarge : news.imageUrl;
 
@@ -53,9 +54,8 @@ export const NewsCard = ({
         </div>
       )}
 
-      {/* ТЕКСТ */}
       <div className="flex flex-col flex-grow min-w-0 justify-center">
-        {variant === "horizontal" && (
+        {variant === "horizontal" && !isHashtagMode && (
           <span className="text-sm text-date mb-1 block font-normal">
             {formatDate(news.publishedAt)}
           </span>
@@ -70,12 +70,13 @@ export const NewsCard = ({
         </h3>
 
         <div className="flex items-center gap-2 flex-wrap mt-auto">
+          {/* РУБРИКИ */}
           <div className="flex gap-1.5 flex-wrap">
             {news.rubrics.map((r) => (
               <Tag
                 key={r.id}
                 variant={
-                  tagVariant === "hashtag"
+                  isHashtagMode
                     ? "hashtag"
                     : BLUE_SLUGS.has(r.slug)
                       ? "blue"
@@ -87,13 +88,18 @@ export const NewsCard = ({
             ))}
           </div>
 
-          {variant !== "horizontal" && (
-            <span className="text-sm text-date ml-1 font-normal">
+          {isHashtagMode && <span className="text-gray-300 ml-1">•</span>}
+
+          {(isHashtagMode || variant !== "horizontal") && (
+            <span className="text-sm text-date font-normal">
               {formatDate(news.publishedAt)}
             </span>
           )}
 
-          <div className="flex gap-4 ml-auto shrink-0 items-center">
+          <div
+            className={`flex gap-3 shrink-0 items-center ${isHashtagMode ? "" : "ml-auto"}`}
+          >
+            {isHashtagMode && <span className="text-gray-300">•</span>}
             <StatBadge type="like" count={news.likeCount} />
             <StatBadge type="view" count={news.viewCount} />
           </div>
