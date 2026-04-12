@@ -24,7 +24,7 @@ const NewsWidget = ({
     return (
       <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
         <div className="pb-4 border-b border-gray-100 mb-6">
-          <h2 className="text-2xl font-semibold text-title">{title}</h2>
+          <h2 className="text-2xl font-bold text-title">{title}</h2>
           <span className="text-base text-date mt-1 block">{displayDate}</span>
         </div>
         <div className="flex flex-col gap-4">
@@ -47,7 +47,7 @@ const NewsWidget = ({
     return (
       <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
         <div className="pb-4 border-b border-gray-100 mb-6">
-          <h2 className="text-2xl font-semibold text-title">{title}</h2>
+          <h2 className="text-2xl font-bold text-title">{title}</h2>
           <span className="text-base text-date mt-1 block">{displayDate}</span>
         </div>
         <div className="flex flex-col items-center py-20 text-red-400">
@@ -61,7 +61,7 @@ const NewsWidget = ({
     return (
       <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
         <div className="pb-4 border-b border-gray-100 mb-6">
-          <h2 className="text-2xl font-semibold text-title">{title}</h2>
+          <h2 className="text-2xl font-bold text-title">{title}</h2>
           <span className="text-base text-date mt-1 block">{displayDate}</span>
         </div>
         <div className="flex flex-col items-center py-20 text-muted italic">
@@ -74,7 +74,7 @@ const NewsWidget = ({
   return (
     <div className="bg-white p-6 rounded-[24px] w-full border border-gray-100">
       <div className="pb-4 border-b border-gray-100 mb-6">
-        <h2 className="text-2xl font-semibold text-title">{title}</h2>
+        <h2 className="text-2xl font-bold text-title">{title}</h2>
         <span className="text-base text-date mt-1 block capitalize">
           {displayDate}
         </span>

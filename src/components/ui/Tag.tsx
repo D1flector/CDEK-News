@@ -7,11 +7,11 @@ interface TagProps {
 
 const Tag = ({ children, variant = "gray" }: TagProps) => {
   const baseStyles =
-    "text-sm font-medium inline-block whitespace-nowrap transition-colors";
+    "text-sm font-normal inline-block whitespace-nowrap transition-colors";
 
   const variants = {
-    gray: "bg-[#E2E2E4] text-[#000000] px-2 py-0.5 rounded-[4px]",
-    blue: "bg-[#AAD7FB] text-[#0E2A45] px-2 py-0.5 rounded-[4px]",
+    gray: "bg-[#E2E2E4] text-[#000000] px-2 py-0.5 rounded-[8px]",
+    blue: "bg-[#AAD7FB] text-[#0E2A45] px-2 py-0.5 rounded-[8px]",
     hashtag: "text-[#85888E] hover:text-title",
   };
 

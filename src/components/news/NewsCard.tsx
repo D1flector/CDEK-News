@@ -21,8 +21,6 @@ export const NewsCard = ({
   priority = false,
   isFirst = false,
 }: NewsCardProps) => {
-  // Выбираем разрешение в зависимости от размера блока
-  // Для большого баннера - L или HD. Для списка - M.
   const src =
     variant === "full" ? news.imageHD || news.imageLarge : news.imageUrl;
 
@@ -58,14 +56,14 @@ export const NewsCard = ({
       {/* ТЕКСТ */}
       <div className="flex flex-col flex-grow min-w-0 justify-center">
         {variant === "horizontal" && (
-          <span className="text-[16px] text-date mb-1 block">
+          <span className="text-xs text-date mb-1 block font-normal">
             {formatDate(news.publishedAt)}
           </span>
         )}
 
         <h3
-          className={`font-bold text-title leading-tight mb-2 ${
-            variant === "compact" ? "text-base" : "text-lg sm:text-[22px]"
+          className={`font-normal text-title leading-tight mb-2 ${
+            variant === "compact" ? "text-sm" : "text-sm sm:text-base"
           }`}
         >
           {news.title}
@@ -90,7 +88,7 @@ export const NewsCard = ({
           </div>
 
           {variant !== "horizontal" && (
-            <span className="text-sm text-date ml-1">
+            <span className="text-xs text-date ml-1 font-normal">
               {formatDate(news.publishedAt)}
             </span>
           )}
