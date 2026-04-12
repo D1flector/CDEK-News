@@ -10,6 +10,7 @@ export default function Home() {
           title="Новости компании"
           type="company/short"
           displayVariant="all-full"
+          shouldPrioritizeFirstImage={true}
         />
 
         <NewsWidget

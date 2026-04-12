@@ -10,6 +10,7 @@ interface NewsWidgetProps {
   type: "company/short" | "company/empty";
   displayVariant?: "all-full" | "first-full";
   isBusiness?: boolean;
+  shouldPrioritizeFirstImage?: boolean;
 }
 
 const NewsWidget = ({
@@ -17,6 +18,7 @@ const NewsWidget = ({
   type,
   displayVariant = "first-full",
   isBusiness = false,
+  shouldPrioritizeFirstImage = false,
 }: NewsWidgetProps) => {
   const { data, isLoading, error, nextPage, prevPage, page } = useNews(type);
   const displayDate = formatMonthYear(new Date());
@@ -87,7 +89,9 @@ const NewsWidget = ({
                         : "compact"
                   }
                   tagVariant={isBusiness ? "hashtag" : "gray"}
-                  priority={index === 0}
+                  priority={
+                    shouldPrioritizeFirstImage && page === 1 && index === 0
+                  }
                   isFirst={index === 0}
                 />
 
