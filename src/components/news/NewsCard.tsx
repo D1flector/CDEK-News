@@ -66,16 +66,12 @@ export const NewsCard = ({
         )}
 
         {variant === "horizontal" && !isHashtagMode && (
-          <span className="text-sm text-date mb-1 block font-normal">
+          <span className="text-base text-date mb-1 block font-normal">
             {formatDate(news.publishedAt)}
           </span>
         )}
 
-        <h3
-          className={`font-normal text-title leading-tight mb-2 ${
-            variant === "compact" ? "text-sm" : "text-sm sm:text-base"
-          }`}
-        >
+        <h3 className="font-normal text-title mb-2 text-[18px] leading-[24px]">
           {news.title}
         </h3>
 
@@ -105,7 +101,7 @@ export const NewsCard = ({
             {isHashtagMode && <span className="text-gray-300">•</span>}
 
             {(isHashtagMode || variant !== "horizontal") && (
-              <span className="text-sm text-date font-normal">
+              <span className="text-base text-date font-normal">
                 {formatDate(news.publishedAt)}
               </span>
             )}
