@@ -3,6 +3,7 @@ import { NewsItem } from "@/types/news";
 import Tag from "../ui/Tag";
 import StatBadge from "../ui/StatBadge";
 import { formatDate } from "@/utils/formatDate";
+import { IconStarFilled } from "@tabler/icons-react";
 
 const BLUE_SLUGS = new Set(["top"]);
 
@@ -24,6 +25,8 @@ export const NewsCard = ({
   const isHashtagMode = tagVariant === "hashtag";
   const src =
     variant === "full" ? news.imageHD || news.imageLarge : news.imageUrl;
+
+  const isTopNews = isHashtagMode && news.rubrics.some((r) => r.slug === "top");
 
   return (
     <div
@@ -55,6 +58,13 @@ export const NewsCard = ({
       )}
 
       <div className="flex flex-col flex-grow min-w-0 justify-center">
+        {isTopNews && (
+          <div className="flex items-center gap-1 bg-[#FDF1BA] text-[#71591B] px-2 py-1 rounded-lg w-fit mb-2">
+            <IconStarFilled size={14} className="shrink-0" />
+            <span className="text-[12px] font-semibold">Топ новость</span>
+          </div>
+        )}
+
         {variant === "horizontal" && !isHashtagMode && (
           <span className="text-sm text-date mb-1 block font-normal">
             {formatDate(news.publishedAt)}
@@ -70,7 +80,6 @@ export const NewsCard = ({
         </h3>
 
         <div className="flex items-center gap-2 flex-wrap mt-auto">
-          {/* РУБРИКИ */}
           <div className="flex gap-1.5 flex-wrap">
             {news.rubrics.map((r) => (
               <Tag
