@@ -10,7 +10,9 @@ export async function GET(req: Request) {
   const apiUrl = `http://1e14c3489fcb.vps.myjino.ru:5000/api/v1/news/feed/${type}?perPage=${perPage}&page=${page}`;
 
   try {
-    const res = await fetch(apiUrl);
+    const res = await fetch(apiUrl, {
+      next: { revalidate: 600 },
+    });
 
     if (!res.ok) {
       return NextResponse.json({ error: "Ошибка API" }, { status: res.status });
@@ -18,7 +20,12 @@ export async function GET(req: Request) {
 
     const data = await res.json();
 
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        "Cache-Control":
+          "public, max-age=300, s-maxage=600, stale-while-revalidate=59",
+      },
+    });
   } catch {
     return NextResponse.json(
       { error: "Ошибка соединения с сервером" },
